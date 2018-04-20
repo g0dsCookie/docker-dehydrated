@@ -33,11 +33,11 @@ RUN set -eu \
  && mv "dehydrated" "/usr/bin/dehydrated" \
  && cd \
  && rm -r "${BDIR}" \
- && mkdir -p /certificates /var/www/dehydrated
+ && mkdir -p /certificates /data /var/www/dehydrated
 
 EXPOSE 80
 
-VOLUME [ "/certificates", "/domains.txt", "/data" ]
+VOLUME [ "/certificates", "/data" ]
 
 ENV     CA="https://acme-v01.api.letsencrypt.org/directory" \
         KEYSIZE=4096 \

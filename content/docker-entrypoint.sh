@@ -12,7 +12,7 @@ function die() {
 function cleanup() {
     nginx_stop
 }
-trap cleanup EXIT
+trap cleanup EXIT TERM
 
 function nginx_start() {
     [[ -e /nginx.pid ]] && return
