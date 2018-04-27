@@ -20,8 +20,11 @@ tag = "{}/{}".format(prefix, service)
 
 versions = {
     "0.6.1": {
-        "latest": True,
+        "latest": False,
     },
+    "0.6.2": {
+        "latest": True,
+    }
 }
 
 def check_version(version):
