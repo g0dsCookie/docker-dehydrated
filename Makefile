@@ -6,11 +6,11 @@ TAG				= $(USERNAME)/$(SERVICE)
 
 .PHONY: build
 build:
-	./build.py --version $(VERSION)
+	./build.py --version $(VERSION) --stdout
 
 .PHONE: build-all
 build-all:
-	./build.py --version all
+	./build.py --version all --stdout
 
 .PHONY: push
 push:
