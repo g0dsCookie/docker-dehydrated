@@ -15,11 +15,13 @@ function cleanup() {
 trap cleanup EXIT TERM
 
 function nginx_start() {
+    [[ "${CHALLENGE}" == "dns-01" ]] && return
     [[ -e /nginx.pid ]] && return
     nginx -c /etc/nginx.conf
 }
 
 function nginx_stop() {
+    [[ "${CHALLENGE}" == "dns-01" ]] && return
     [[ ! -e /nginx.pid ]] && return
     local pid=$(cat /nginx.pid)
     if ! kill ${pid}; then
@@ -28,9 +30,20 @@ function nginx_stop() {
     unset pid
 }
 
-for key in CA KEYSIZE RENEW_DAYS PRIVATE_KEY_REGEN KEY_ALGO CONTACT_EMAIL; do
+for key in CA KEYSIZE RENEW_DAYS PRIVATE_KEY_REGEN KEY_ALGO CONTACT_EMAIL CHALLENGE; do
     echo "Populating ${key} with value ${!key:-unset}..."
     sed -i "s/%{${key}}%/${!key//\//\\/}/g" /etc/dehydrated/config
+done
+
+for i in /init.d/*; do
+	if [[ ! -x "${i}" ]]; then
+		echo "${i} is not executable!"
+		exit 2
+	fi
+	if ! ${i}; then
+		echo "${i} failed."
+		exit 3
+	fi
 done
 
 if [[ "${1:-unset}" == "--clean" ]]; then

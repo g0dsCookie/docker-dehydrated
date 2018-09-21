@@ -33,11 +33,11 @@ RUN set -eu \
  && mv "dehydrated" "/usr/bin/dehydrated" \
  && cd \
  && rm -r "${BDIR}" \
- && mkdir -p /certificates /data /var/www/dehydrated
+ && mkdir -p /certificates /data /hooks.d /init.d /var/www/dehydrated
 
 EXPOSE 80
 
-VOLUME [ "/certificates", "/data" ]
+VOLUME [ "/certificates", "/data", "/hooks.d"]
 
 ENV     CA="https://acme-v01.api.letsencrypt.org/directory" \
         KEYSIZE=4096 \
@@ -45,6 +45,7 @@ ENV     CA="https://acme-v01.api.letsencrypt.org/directory" \
         PRIVATE_KEY_REGEN="yes" \
         KEY_ALGO="rsa" \
         CONTACT_EMAIL="webmaster@example.org" \
-        SLEEP=86400
+        SLEEP=86400 \
+	CHALLENGE=http-01
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]

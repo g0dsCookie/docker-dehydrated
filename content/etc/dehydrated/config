@@ -2,7 +2,7 @@
 CA="%{CA}%"
 
 # Which challenge should be used? Currently http-01 and dns-01 are supported
-CHALLENGETYPE="http-01"
+CHALLENGETYPE="%{CHALLENGE}%"
 
 # Output directory for challenge-tokens to be served by webserver or deployed in HOOK (default: /var/www/dehydrated)
 WELLKNOWN="/var/www/dehydrated"
@@ -38,7 +38,7 @@ CONTACT_EMAIL="%{CONTACT_EMAIL}%"
 BASEDIR="/data"
 
 # File containing the list of domains to request certificates for (default: $BASEDIR/domains.txt)
-DOMAINS_TXT="${BASEDIR}/domains.txt"
+DOMAINS_TXT="/domains.txt"
 
 # Output directory for generated certificates
 CERTDIR="${BASEDIR}/certs"

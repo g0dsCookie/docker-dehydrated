@@ -158,6 +158,16 @@ exit_hook() {
   :
 }
 
+if [[ -d "/hooks.d" ]]; then
+	for i in /hooks.d/*; do
+		if [[ ! -e "${i}" ]]; then
+			echo "${i} is not executable." >&2
+		fi
+		echo "Running hook ${i}..."
+		${i} $@
+	done
+fi
+
 HANDLER="$1"; shift
 if [[ "${HANDLER}" =~ ^(deploy_challenge|clean_challenge|deploy_cert|unchanged_cert|invalid_challenge|request_failure|generate_csr|startup_hook|exit_hook)$ ]]; then
   "$HANDLER" "$@"
