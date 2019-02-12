@@ -59,7 +59,7 @@ deploy_cert() {
     # - TIMESTAMP
     #   Timestamp when the specified certificate was created.
 
-    cat "${FULLCHAINFILE}" "${KEYFILE}" >"/certificates/${DOMAIN}.pem"
+    cat "${FULLCHAINFILE}" "${KEYFILE}" >"/certificates/${DOMAIN}"
 }
 
 unchanged_cert() {
