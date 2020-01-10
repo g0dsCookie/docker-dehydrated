@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -Eeuo pipefail
 
@@ -35,16 +35,19 @@ for key in CA KEYSIZE RENEW_DAYS PRIVATE_KEY_REGEN KEY_ALGO CONTACT_EMAIL CHALLE
     sed -i "s/%{${key}}%/${!key//\//\\/}/g" /etc/dehydrated/config
 done
 
-for i in /init.d/*; do
-	if [[ ! -x "${i}" ]]; then
-		echo "${i} is not executable!"
-		exit 2
-	fi
-	if ! ${i}; then
-		echo "${i} failed."
-		exit 3
-	fi
-done
+if [[ -d /init.d ]]; then
+	for i in /init.d/*; do
+		[[ "${i}" == "/init.d/*" ]] && break
+		if [[ ! -x "${i}" ]]; then
+			echo "${i} is not executable!"
+			exit 2
+		fi
+		if ! ${i}; then
+			echo "${i} failed."
+			exit 3
+		fi
+	done
+fi
 
 if [[ "${1:-unset}" == "--clean" ]]; then
     rm -r "/data/*" "/data/.registered"

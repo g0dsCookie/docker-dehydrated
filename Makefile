@@ -1,6 +1,6 @@
-MAJOR			?=
-MINOR			?=
-PATCH			?=
+MAJOR			?= 0
+MINOR			?= 6
+PATCH			?= 5
 
 TAG		= g0dscookie/dehydrated
 TAGLIST	= -t ${TAG}:${MAJOR} -t ${TAG}:${MAJOR}.${MINOR} -t ${TAG}:${MAJOR}.${MINOR}.${PATCH}
@@ -11,13 +11,13 @@ nothing:
 	@echo "No job given."
 	@exit 1
 
-.PHONY: alpine3.9
-alpine3.9:
-	docker build ${BUILDARGS} ${TAGLIST} alpine3.9
+.PHONY: alpine3.10
+alpine3.10:
+	docker build ${BUILDARGS} ${TAGLIST} alpine3.10
 
-.PHONY: alpine3.9-latest
-alpine3.9-latest:
-	docker build ${BUILDARGS} -t ${TAG}:latest ${TAGLIST} alpine3.9
+.PHONY: alpine3.10-latest
+alpine3.10-latest:
+	docker build ${BUILDARGS} -t ${TAG}:latest ${TAGLIST} alpine3.10
 
 .PHONY: clean
 clean:

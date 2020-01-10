@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.10
 
 ARG MAJOR
 ARG MINOR
@@ -26,15 +26,15 @@ RUN set -eu \
  && install -o root -g root -m 0555 "dehydrated" "/usr/bin/dehydrated" \
  && cecho "##### CLEANING BUILD ENVIRONMENT #####" \
  && cd && rm -r "${BDIR}" && apk del .dehydrated-bdeps \
- && mkdir -p /certificates /data /hooks.d /init.d /var/www/dehydrated
+ && mkdir -p /certificates /data /var/www/dehydrated
 
 COPY content/ /
 
 EXPOSE 80
 
-VOLUME [ "/certificates", "/data", "/hooks.d"]
+VOLUME [ "/certificates", "/data", "/init.d", "/hooks.d", "/domains.txt" ]
 
-ENV CA=https://acme-v01.api.letsencrypt.org/directory \
+ENV CA=https://acme-v02.api.letsencrypt.org/directory \
     KEYSIZE=4096 \
     RENEW_DAYS=30 \
     PRIVATE_KEY_REGEN=yes \
